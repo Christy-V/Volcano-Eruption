@@ -20,23 +20,7 @@ def hello_world():
 
 @app.route('/index')
 def index():
-    return """<Html>
-<body>
-      <h3>Volcano Erption Prediction</h3>
-
-<div>
-  <form action="/predict" method="POST">
-
-    <Input Type ="File" accept=".csv" name="csvfile">
-  
-
-    <input type="submit" value="Submit">
-
-
-  </form>
-</div>
-</body>
-</html>"""
+    return flask.render_template('index.html')
 
 
 
@@ -53,16 +37,7 @@ def predict():
 
     if size < 10:
         logging.error('Need 10 Sensor Reading For Prediction')
-        return """<!DOCTYPE html>
-<html>
-   <head>
-      <title>Incomplete Reading</title>
-   </head>
-   <body>
-      <h1>Incomplete Reading</h1>
-      <p>Need 10 Sensor Reading to predict </p>
-   </body>
-</html"""
+        return flask.render_template('less_feat.html')
         sys.exit()
     
     #Drooping the least important features (analysed via EDA)
