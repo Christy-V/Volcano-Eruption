@@ -5,7 +5,7 @@ import pandas as pd
 import librosa
 import re
 from scipy import signal
-from numpy.fft import fft,fftshift,fftfreq
+from scipy.fft import fft,fftshift,fftfreq
 import logging
 
 logging.basicConfig(filename='error.log',level=logging.ERROR,format='%(asctime)s:%(levelname)s:%(message)s')
@@ -20,7 +20,23 @@ def hello_world():
 
 @app.route('/index')
 def index():
-    return flask.render_template('index.html')
+    return """<Html>
+<body>
+      <h3>Volcano Erption Prediction</h3>
+
+<div>
+  <form action="/predict" method="POST">
+
+    <Input Type ="File" accept=".csv" name="csvfile">
+  
+
+    <input type="submit" value="Submit">
+
+
+  </form>
+</div>
+</body>
+</html>"""
 
 
 
@@ -37,7 +53,16 @@ def predict():
 
     if size < 10:
         logging.error('Need 10 Sensor Reading For Prediction')
-        return flask.render_template('less_feat.html')
+        return """<!DOCTYPE html>
+<html>
+   <head>
+      <title>Incomplete Reading</title>
+   </head>
+   <body>
+      <h1>Incomplete Reading</h1>
+      <p>Need 10 Sensor Reading to predict </p>
+   </body>
+</html"""
         sys.exit()
     
     #Drooping the least important features (analysed via EDA)
@@ -170,7 +195,7 @@ def predict():
     # loading LGBM with selected Features
     loaded_model2 = joblib.load('lgbm.sav')
     y_pred = loaded_model2.predict(X_rd)
-    return jsonify({'time left:': y_pred[0]})
+    return jsonify({'time left :': y_pred[0]})
 
 
 
