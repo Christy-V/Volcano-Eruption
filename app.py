@@ -151,9 +151,9 @@ def predict():
             X.loc[0,'{}_mfcc_{}_mean'.format(i,j)] = mean_mfcc[j]
             X.loc[0,'{}_delta_mfcc_{}_max'.format(i,j)] = mean_delta[j]
             X.loc[0,'{}_delta2_mfcc_{}_max'.format(i,j)] = mean_delta2[j] 
+            
     X=X.reset_index()  
     X.drop(columns=["index"],inplace=True)
-    print(X)
     #loading Minmax file
     loaded_model =joblib.load('minmax.sav')
     scaled=loaded_model.transform(X)
