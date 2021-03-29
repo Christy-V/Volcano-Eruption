@@ -12,7 +12,7 @@ logging.basicConfig(filename='error.log',level=logging.ERROR,format='%(asctime)s
 import sys
 
 import flask
-app = Flask(__name__)
+app = Flask(__name__)  
 
 @app.route('/')
 def hello_world():
@@ -151,6 +151,7 @@ def predict():
             X.loc[0,'{}_mfcc_{}_mean'.format(i,j)] = mean_mfcc[j]
             X.loc[0,'{}_delta_mfcc_{}_max'.format(i,j)] = mean_delta[j]
             X.loc[0,'{}_delta2_mfcc_{}_max'.format(i,j)] = mean_delta2[j] 
+            
     X=X.reset_index()  
     X.drop(columns=["index"],inplace=True)
     #loading Minmax file
@@ -170,7 +171,7 @@ def predict():
     # loading LGBM with selected Features
     loaded_model2 = joblib.load('lgbm.sav')
     y_pred = loaded_model2.predict(X_rd)
-    return jsonify({'time left:': y_pred[0]})
+    return jsonify({'pred': y_pred[0]})
 
 
 
