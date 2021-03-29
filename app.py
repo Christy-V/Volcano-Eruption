@@ -177,4 +177,4 @@ def predict():
 
 
 if __name__ == '__main__':
-    app.run(DBUG=True)
+    app.run(DEBUG=True)
