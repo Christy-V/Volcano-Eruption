@@ -1,5 +1,4 @@
 from flask import Flask, jsonify, request,render_template
-from flask_ngrok import run_with_ngrok
 import numpy as np
 import joblib
 import pandas as pd
@@ -13,8 +12,7 @@ logging.basicConfig(filename='error.log',level=logging.ERROR,format='%(asctime)s
 import sys
 
 import flask
-app = Flask(__name__) 
-run_with_ngrok(app)  
+app = Flask(__name__)  
 
 @app.route('/')
 def hello_world():
