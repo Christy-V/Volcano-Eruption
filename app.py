@@ -1,3 +1,4 @@
+import flask
 from flask import Flask, jsonify, request,render_template
 import numpy as np
 import joblib
@@ -7,16 +8,14 @@ import re
 from scipy import signal
 from numpy.fft import fft,fftshift,fftfreq
 import logging
-
-logging.basicConfig(filename='error.log',level=logging.ERROR,format='%(asctime)s:%(levelname)s:%(message)s')
 import sys
+app = Flask(__name__)
 
-import flask
-app = Flask(__name__)  
+
 
 @app.route('/')
 def hello_world():
-    return 'Your Clock Is Ticking try /upload Fast'
+    return 'Your Clock Is Ticking'
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
