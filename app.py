@@ -148,19 +148,10 @@ def upload():
     loaded_model =joblib.load('minmax.pkl')
     scaled=loaded_model.transform(X)
     X = pd.DataFrame(scaled, columns =X.columns.values)
-    #Selecting Best Features
-    loaded_model1 = joblib.load('Kbest.pkl')
-    scores=pd.DataFrame(loaded_model1.scores_)
-    columns=pd.DataFrame(X.columns)
-    ft_score_df=pd.concat([columns,scores],axis=1)
-    ft_score_df.columns=["Name","Score"]      
-    ft_score_df=ft_score_df.nlargest(500,"Score")
-    rd_columns = list(ft_score_df["Name"])
-    X_rd=X[rd_columns]
 
     # loading LGBM with selected Features
     loaded_model2 = joblib.load('lgbm.pkl')
-    y_pred = loaded_model2.predict(X_rd)
+    y_pred = loaded_model2.predict(X)
     return render_template('upload.html', out= y_pred[0] )
   return render_template('upload.html')
 if __name__ == '__main__':
